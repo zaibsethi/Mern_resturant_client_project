@@ -12,6 +12,8 @@ function Reservation() {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [phone, setPhone] = useState("");
+    const [error, setError] = useState(null); // State to hold error message
+
 
   const navigate = useNavigate();
 
@@ -38,11 +40,9 @@ function Reservation() {
          navigate("/success")
 
     } catch (error) {
-        // toast.error(error)
-        toast.error(error.message || "An error occurred");
-
-        
-    }
+      //  const setError = toast.error(error.response.data.message) // for toast error
+       setError(error.response.data.message || "An error occurred"); // Set error state/ for displaying in form
+      }
 
   }
 
@@ -58,6 +58,8 @@ function Reservation() {
                 <h1>MAKE A RESERVATION </h1>
                 <p>Call for more details</p>
                 <form>
+                {error && <div style={{color:"red"}}>{error}</div>}
+
                    <div>
                     <input type='text' placeholder='First Name' value={firstName} onChange={(e)=>setFirstName(e.target.value)}/>
 
